@@ -1,1 +1,0 @@
-aprendiendo....... wuachiwuachi wo wuachi wuachi wo
