@@ -168,4 +168,4 @@ print(resultado_benchmark)
 ##Cuando trabajas con map(), estás repitiendo el proceso una vez por cada base: filtrar, calcular media, desviación estándar, etc. Se hace todo varias veces.
 ##En cambio, cuando apilas todas las bases en una sola, haces el filtrado y los cálculos solo una vez.
 ##Eso reduce el trabajo total y, en consecuencia, el tiempo de ejecución.
-##La diferencia se nota más cuando se usa data.table, que funciona mejor cuando recibe una tabla grande completa. pinpun
+##La diferencia se nota más cuando se usa data.table, que funciona mejor cuando recibe una tabla grande completa. ponpun
