@@ -22,4 +22,4 @@ read_esi_data <- function(path) {
   sep <- if (stringr::str_detect(first_line, ";")) ";" else ","
   data.table::fread(path, sep = sep)
 }
-#hola
+#adios
