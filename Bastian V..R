@@ -1,1 +1,0 @@
-Bastian Vera no me gusta tu código
