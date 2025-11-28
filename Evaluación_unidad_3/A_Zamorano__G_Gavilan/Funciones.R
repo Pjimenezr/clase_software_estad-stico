@@ -1,30 +1,29 @@
 library(stringr)
 library(readr)
 library(data.table)
+library(purrr)
+library(tidyverse)
 
-extract_name <- function(url) {
-  nombre_sucio <- basename(url)
-  nombre_limpio <- str_remove(nombre_sucio, "\\?.*$")
-  nombre_final <- str_replace(nombre_limpio, "\\.cav$", ".csv")
-  
-  return(nombre_final)
-}
+# extraer nombres ---------------------------------------------------------
+
+
+extract_name <- function(url){
+    str_extract(url, "[^/]+(?=\\?)")
+  }
+
+
+# descarga ----------------------------------------------------------------
 
 
 download_esi_data <- function(url, file_name, directory = "data") {
-  if (!dir.exists(directory)) {
+  if(!dir.exists(directory)){
     dir.create(directory)
   }
-  file_path <- file.path(directory, file_name)
-  message(paste("Descargando:", file_name, "..."))
-  tryCatch({
-    download.file(url, destfile = file_path, mode = "wb", quiet = TRUE)
-    message(paste("OK:", file_name))
-  }, error = function(e) {
-    message(paste("ERROR descargando:", file_name))
-  })
+  destino_path <- file.path(directory, file_name)
+  download.file(url, destfile = destino_path)
 }
 
+descargas <- map2(urls, file_names, ~ download_esi_data(.x, .y, directory = "data"))
 
 read_esi_data <- function(path) {
   lineas <- readLines(path, n = 5)
