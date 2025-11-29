@@ -1,9 +1,7 @@
 
 # 3 -----------------------------------------------------------------------
 
-
 # 3.1 ---------------------------------------------
-
 
 #Función de extracción
 extract_name <- function(url) {
@@ -22,7 +20,7 @@ file_names
 
 # 3.2 ----------------------------------------------
 
-download_esi_data <- function(url, file_name, directory = "data") {
+download_esi_data <- function(url, file_name, directory = "datasb") {
   
   target_dir <- file.path(directory)
   
@@ -35,20 +33,24 @@ download_esi_data <- function(url, file_name, directory = "data") {
   download.file(url = url, 
                 destfile = destination_path, 
                 mode = "wb", 
-                quiet = TRUE)
+                quiet = TRUE,
+                method = "auto")
   
   message(paste("Descarga completa:", file_name, "guardado en:", destination_path))
 }
 
-
 # 3.3 ----------------------------------------------
-#NO USARAUN
+#NO USAR AUN
+
+options(timeout = 300)
+
 purrr::walk2(
   .x = urls, 
   .y = file_names, 
   .f = download_esi_data,
-  directory = "data" 
+  directory = "datasb" 
 )
+
 
 
 
