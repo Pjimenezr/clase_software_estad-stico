@@ -20,7 +20,7 @@ file_names
 
 # 3.2 ----------------------------------------------
 
-download_esi_data <- function(url, file_name, directory = "datasb") {
+download_esi_data <- function(url, file_name, directory = "data") {
   
   target_dir <- file.path(directory)
   
@@ -40,7 +40,6 @@ download_esi_data <- function(url, file_name, directory = "datasb") {
 }
 
 # 3.3 ----------------------------------------------
-#NO USAR AUN
 
 options(timeout = 300)
 
@@ -48,9 +47,36 @@ purrr::walk2(
   .x = urls, 
   .y = file_names, 
   .f = download_esi_data,
-  directory = "datasb" 
+  directory = "data" 
 )
 
 
+# 4 -----------------------------------------------------------------------
+
+# 4.1 ---------------------------------------------------------------------
+
+read_esi_data <- function(path) {
+  
+  data <- readr::read_delim(
+    file = path, 
+    delim = NULL, 
+    col_names = TRUE,
+    show_col_types = FALSE
+  )
+  
+  return(data)
+}
+
+
+# 4.2 ---------------------------------------------------------------------
+
+file_paths <- list.files("data", full.names = TRUE)
+
+message(paste("Archivos encontrados:", paste(basename(file_paths), collapse = ", ")))
+
+esi_data_list <- purrr::map(file_paths, read_esi_data)
+
+file_names_clean <- basename(file_paths)
+names(esi_data_list) <- file_names_clean
 
 
