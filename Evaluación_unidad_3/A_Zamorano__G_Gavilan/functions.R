@@ -52,10 +52,20 @@ lista_bases <- map(rutas_archivos, read_esi_data)
 str(lista_bases, max.level = 1)
 
 # personas y hogares ------------------------------------------------------
-personasxhogar<-function(df){
+personas_hogar<-function(df){
   df %>% summarise(
     numero_personas = n_distinct(idrph),
     numero_hogares = n_distinct(id_identificacion)
   )
 }
+# estadísticos de ingreso del trabajo principal -----------------------------------------------------------------------
 
+estadisticos_ingresos <- function(df) {
+  df %>% filter(ocup_ref == 1) %>% 
+    summarise(
+      minimo = min(ing_t_p, na.rm = TRUE),
+      maximo = max(ing_t_p, na.rm = TRUE),
+      media  = mean(ing_t_p, na.rm = TRUE),
+      p10    = quantile(ing_t_p, 0.10, na.rm = TRUE),
+      p90    = quantile(ing_t_p, 0.90, na.rm = TRUE))
+}
