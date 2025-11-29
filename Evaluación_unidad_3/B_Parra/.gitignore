@@ -1,0 +1,13 @@
+
+*.csv
+*.xlsx
+*.rds
+
+
+.Rhistory
+.RData
+.Rproj.user/
+
+
+*~
+.DS_Store
