@@ -37,6 +37,7 @@ descargas <- map2(urls, file_names, ~ download_esi_data(.x, .y, directory = "dat
 # lectura de archivos -----------------------------------------------------
 
 
+
 read_esi_data <- function(path) {
   lineas <- readLines(path, n = 3)
   texto <- paste(lineas, collapse = "")
@@ -69,3 +70,4 @@ estadisticos_ingresos <- function(df) {
       p10    = quantile(ing_t_p, 0.10, na.rm = TRUE),
       p90    = quantile(ing_t_p, 0.90, na.rm = TRUE))
 }
+
