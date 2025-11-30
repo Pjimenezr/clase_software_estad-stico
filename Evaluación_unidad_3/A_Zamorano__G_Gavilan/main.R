@@ -34,6 +34,7 @@ print(tabla_ingresos_principal)
 
 data_files <- list.files("data", full.names = TRUE, pattern = "\\.csv$")
 
+lista_esi <- map(data_files, read_esi_data)
 lista_esi <- map(lista_esi, function(df) {
   df %>%
     mutate(id_identificacion = as.character(id_identificacion))
