@@ -25,6 +25,14 @@ download_esi_data <- function(url, file_name, directory) {
   if (!dir.exists(directory)) {
     dir.create(directory, recursive = TRUE)
     message("Directorio creado: ", directory)
-    }}
-  
+    }
+ruta_completa <- file.path(directory, file_name)
+
+tryCatch({
+  download.file(url, destfile = ruta_completa, mode = "wb")
+  message("✓ Descargado exitosamente: ", file_name)
+}, error = function(e) {
+  message("✗ Error al descargar ", file_name, ": ", e$message)
+})
+}
 
