@@ -39,3 +39,25 @@ walk2(urls, file_names, ~download_esi_data(.x, .y, "data"))
 
 cat("\n✓ Descarga completada\n")
 
+######## parte 2 ##########
+
+cat("\n=============================================\n")
+cat("   EJERCICIO 2: LECTURA DE DATOS\n")
+cat("=============================================\n\n")
+
+
+rutas_archivos <- file.path("data", file_names)
+
+
+cat("Leyendo archivos...\n\n")
+lista_datos <- map(rutas_archivos, read_esi_data)
+
+names(lista_datos) <- file_names
+
+cat("\n✓ Todos los archivos cargados exitosamente\n")
+cat("Bases de datos disponibles:\n")
+print(names(lista_datos))
+
+
+
+
