@@ -25,21 +25,21 @@ print(tabla_ingresos_principal)
 # item 6 ------------------------------------------------------------------
 
 data_files <- list.files("data", full.names = TRUE, pattern = "\\.csv$")
+lista_bases <- map(rutas_archivos, read_esi_data)
 
-lista_esi <- map(data_files, read_esi_data)
-lista_esi <- map(lista_esi, function(df) {
+lista_bases <- map(lista_bases, function(df) {
   df %>%
     mutate(id_identificacion = as.character(id_identificacion))
 })
-datos_stack_df <- bind_rows(lista_esi, .id = "archivo")
+datos_stack_df <- bind_rows(lista_bases, .id = "archivo")
 
-lista_esi_dt <- map(lista_esi, as.data.table)
+lista_bases_dt <- map(lista_bases, as.data.table)
 
 datos_stack_dt <- as.data.table(datos_stack_df)
 
 
 f_list_dplyr <- function() {
-  map(lista_esi, ~ .x %>% 
+  map(lista_bases, ~ .x %>% 
         summarise(media = mean(ing_t_p, na.rm=TRUE), 
                   sd = sd(ing_t_p, na.rm=TRUE),
                   cv = sd(ing_t_p, na.rm=TRUE)/mean(ing_t_p, na.rm=TRUE)))
@@ -54,7 +54,7 @@ f_stack_dplyr <- function() {
 }
 
 f_list_dt <- function() {
-  lapply(lista_esi_dt, function(dt) {
+  lapply(lista_bases_dt, function(dt) {
     dt[, .(media = mean(ing_t_p, na.rm=TRUE),
            sd = sd(ing_t_p, na.rm=TRUE),
            cv = sd(ing_t_p, na.rm=TRUE)/mean(ing_t_p, na.rm=TRUE))]
