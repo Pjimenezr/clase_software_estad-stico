@@ -97,3 +97,38 @@ cat("  - outputs/tabla_personas_hogares.csv\n")
 cat("  - outputs/tabla_ingresos.csv\n")
 
 
+#### lo de la eficiencia
+
+cat("\n=============================================\n")
+cat("   EJERCICIO 4: COMPARACIÓN DE EFICIENCIA\n")
+cat("=============================================\n\n")
+
+
+cat("Preparando datos para el benchmark...\n")
+
+lista_datos_con_version <- map2(lista_datos, file_names, function(datos, nombre) {
+  datos$version <- nombre
+  return(datos)
+})
+
+datos_apilados <- bind_rows(lista_datos_con_version)
+datos_apilados_dt <- as.data.table(datos_apilados)
+
+cat("Datos preparados:\n")
+cat("  - Lista con", length(lista_datos), "datasets\n")
+cat("  - Dataset apilado con", nrow(datos_apilados), "filas\n\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
