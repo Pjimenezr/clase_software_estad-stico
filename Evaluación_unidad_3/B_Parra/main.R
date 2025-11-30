@@ -80,5 +80,20 @@ tabla_2 <- crear_tabla_ingresos(lista_datos, file_names)
 cat("\n--- TABLA 2: ESTADÍSTICOS DE INGRESOS ---\n")
 print(tabla_2)
 
+### ahora guardar las tablas en outputs
+cat("\n\nGuardando resultados en carpeta outputs/...\n")
+
+
+if (!dir.exists("outputs")) {
+  dir.create("outputs")
+}
+
+
+write.csv(tabla_1, "outputs/tabla_personas_hogares.csv", row.names = FALSE)
+write.csv(tabla_2, "outputs/tabla_ingresos.csv", row.names = FALSE)
+
+cat("✓ Tablas guardadas en:\n")
+cat("  - outputs/tabla_personas_hogares.csv\n")
+cat("  - outputs/tabla_ingresos.csv\n")
 
 
