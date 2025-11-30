@@ -234,6 +234,7 @@ cat("   cálculo de estadísticos se ejecuten en un solo recorrido optimizado de
 cat("   datos. \n\n")
 
 
+### listo, está to'o jdjdjd
 
 
 
