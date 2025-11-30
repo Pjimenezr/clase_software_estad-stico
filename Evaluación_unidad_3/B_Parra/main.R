@@ -167,7 +167,19 @@ cat("  - outputs/benchmark_resultados.rds\n")
 cat("  - outputs/benchmark_resumen.csv\n")
 
 
+##### análisis de los resultados del benchmark ####
 
+cat("\n=============================================\n")
+cat("   ANÁLISIS DE RESULTADOS\n")
+cat("=============================================\n\n")
+
+tiempos_medios <- aggregate(time ~ expr, data = resultados_benchmark, FUN = mean)
+tiempos_medios$time_ms <- tiempos_medios$time / 1e6 
+
+cat("--- TIEMPOS PROMEDIO (en milisegundos) ---\n")
+print(tiempos_medios[, c("expr", "time_ms")])
+
+estrategia_mas_rapida <- tiempos_medios$expr[which.min(tiempos_medios$time_ms)]
 
 
 
