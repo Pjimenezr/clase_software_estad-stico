@@ -36,3 +36,34 @@ tryCatch({
 })
 }
 
+
+
+#### Ejercicio 2 (es el número 4 en la pauta de instrucciones) #######
+### lo de la función de descarga masiva lo he puesto (punto 3,3 de la pauta) en el main profe
+
+read_esi_data <- function(path) {
+  primera_linea <- readLines(path, n = 1, warn = FALSE)
+  if (grepl(";", primera_linea)) {
+    separador <- ";"
+  } else if (grepl(",", primera_linea)) {
+    separador <- ","
+  } else if (grepl("\t", primera_linea)) {
+    separador <- "\t"
+  } else {
+    separador <- ","
+  }
+  
+  datos <- read.csv(path, sep = separador, stringsAsFactors = FALSE, 
+                    encoding = "UTF-8")
+  
+  message("✓ Archivo leído con separador: '", separador, "' - ", 
+          nrow(datos), " filas, ", ncol(datos), " columnas")
+  
+  return(datos)
+}
+
+
+
+
+
+
