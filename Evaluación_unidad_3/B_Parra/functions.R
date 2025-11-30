@@ -9,3 +9,17 @@ library(dplyr)
 library(purrr)
 library(data.table)
 library(microbenchmark)
+
+
+
+#### Ejercicio 1
+
+extract_name <- function(url) {
+  nombre <- sub(".*/([^/]+\\.csv).*", "\\1", url)
+  return(nombre)
+}
+
+
+
+
+
