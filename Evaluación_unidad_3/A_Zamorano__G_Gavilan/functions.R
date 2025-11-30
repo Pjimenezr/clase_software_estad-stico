@@ -19,8 +19,7 @@ urls <- c(
 extract_name <- function(url){
     str_extract(url, "[^/]+(?=\\?)")
   }
-file_names <- map_chr(urls, extract_name)
-file_names
+
 
 # descarga ----------------------------------------------------------------
 
@@ -37,12 +36,25 @@ descargas <- map2(urls, file_names, ~ download_esi_data(.x, .y, directory = "dat
 # lectura de archivos -----------------------------------------------------
 
 
+#read_esi_data <- function(path) {
+  #lineas <- readLines(path, n = 3)
+  #texto <- paste(lineas, collapse = "")
+  #sep_detectado <- if (str_detect(texto, ";")) ";" else ","
+  #message(paste("Leyendo", basename(path), "| Separador detectado:", sep_detectado))
+  #df <- data.table::fread(path, sep= sep_detectado)
+  #return(df)
+#}
 read_esi_data <- function(path) {
-  lineas <- readLines(path, n = 3)
-  texto <- paste(lineas, collapse = "")
-  sep_detectado <- if (str_detect(texto, ";")) ";" else ","
-  message(paste("Leyendo", basename(path), "| Separador detectado:", sep_detectado))
-  df <- data.table::fread(path, sep= sep_detectado)
+  lineas <- readLines(path, n = 5)
+  n_punto_coma <- sum(str_count(lineas, ";"))
+  n_coma <- sum(str_count(lineas, ","))
+  sep_detectado <- if (n_punto_coma > n_coma) ";" else ","
+  message(paste("Leyendo", basename(path), "| Separador:", sep_detectado))
+  df <- read_delim(path, 
+                   delim = sep_detectado, 
+                   show_col_types = FALSE, 
+                   name_repair = "unique") 
+  df <- janitor::clean_names(df)
   return(df)
 }
 
@@ -69,3 +81,4 @@ estadisticos_ingresos <- function(df) {
       p10    = quantile(ing_t_p, 0.10, na.rm = TRUE),
       p90    = quantile(ing_t_p, 0.90, na.rm = TRUE))
 }
+
