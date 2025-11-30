@@ -58,6 +58,27 @@ cat("\n✓ Todos los archivos cargados exitosamente\n")
 cat("Bases de datos disponibles:\n")
 print(names(lista_datos))
 
+#### la parte 3, la de los indicadores ####
+
+
+cat("\n=============================================\n")
+cat("   EJERCICIO 3: INDICADORES\n")
+cat("=============================================\n\n")
+
+
+######### Tabla 1 - Personas y hogares #####
+cat("Generando Tabla 1: Conteo de personas y hogares...\n")
+tabla_1 <- crear_tabla_personas_hogares(lista_datos, file_names)
+
+cat("\n--- TABLA 1: PERSONAS Y HOGARES ---\n")
+print(tabla_1)
+
+####### Tabla 2 - Estadísticos de ingresos ##########
+cat("\n\nGenerando Tabla 2: Estadísticos de ingresos...\n")
+tabla_2 <- crear_tabla_ingresos(lista_datos, file_names)
+
+cat("\n--- TABLA 2: ESTADÍSTICOS DE INGRESOS ---\n")
+print(tabla_2)
 
 
 
