@@ -146,10 +146,25 @@ resultados_benchmark <- microbenchmark(
     calcular_stats_datatable_apilado(datos_apilados_dt)
   },
   
-  times = 5  # 5 iteraciones
+  times = 5
 )
 
 
+
+
+cat("\n--- RESULTADOS DEL BENCHMARK ---\n\n")
+print(resultados_benchmark)
+
+cat("\n\nGuardando resultados del benchmark...\n")
+saveRDS(resultados_benchmark, "outputs/benchmark_resultados.rds")
+
+
+resumen_benchmark <- summary(resultados_benchmark)
+write.csv(resumen_benchmark, "outputs/benchmark_resumen.csv", row.names = FALSE)
+
+cat("✓ Resultados del benchmark guardados en:\n")
+cat("  - outputs/benchmark_resultados.rds\n")
+cat("  - outputs/benchmark_resumen.csv\n")
 
 
 
