@@ -192,3 +192,18 @@ cat("   Por último, lo que ocurre al trabajar con tablas apiladas es que permit
 cat("   de los datos, mientras que usar listas con map requiere iterar múltiples veces.\n\n")
 
 
+
+#### pregunta 2
+
+cat("2. ¿Existen diferencias relevantes entre dplyr y data.table?\n")
+tiempo_dplyr <- tiempos_medios$time_ms[tiempos_medios$expr == "apilado_dplyr"]
+tiempo_dt <- tiempos_medios$time_ms[tiempos_medios$expr == "apilado_datatable"]
+diferencia_pct <- ((tiempo_dplyr - tiempo_dt) / tiempo_dplyr) * 100
+
+cat("   Sí, las diferencias son considerables. En este análisis, data.table demostró\n")
+cat("   ser aproximadamente", round(diferencia_pct, 1), "% más rápido que dplyr. Esta diferencia\n")
+cat("   se vuelve aún más pronunciada cuando se trabaja con bases de datos más grandes\n")
+cat("   La desición de escoger uno u otro debería considerar si se quiere mayor velocidad de procesamiento, se escogería data.table\n")
+cat("   pero si lo que se desea es un código más intuitivo por ejemplo cuando se está comenzando a programar, se usaría dplyr. \n\n")
+
+
