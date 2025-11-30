@@ -12,14 +12,19 @@ library(microbenchmark)
 
 
 
-#### Ejercicio 1
-
+#### Ejercicio 1 (apartado número 3 de las instrucciones)
+### 1.1
 extract_name <- function(url) {
   nombre <- sub(".*/([^/]+\\.csv).*", "\\1", url)
   return(nombre)
 }
 
+### 3.2
 
-
-
+download_esi_data <- function(url, file_name, directory) {
+  if (!dir.exists(directory)) {
+    dir.create(directory, recursive = TRUE)
+    message("Directorio creado: ", directory)
+    }}
+  
 
