@@ -20,7 +20,6 @@ urls <- c(
 
 # 3.1 ---------------------------------------------------------------------
 
-file_names <- map_chr(urls, extract_name)
 file_names
 # tabla de personas y hogares ---------------------------------------------
 tabla_personas_hogares <- map_df(lista_bases, personas_hogar, .id ="version")
@@ -33,7 +32,12 @@ tabla_ingresos_principal<-map_df(lista_bases, estadisticos_ingresos, .id ="versi
 print(tabla_ingresos_principal)
 # item 6 ------------------------------------------------------------------
 
+data_files <- list.files("data", full.names = TRUE, pattern = "\\.csv$")
 
+lista_esi <- map(lista_esi, function(df) {
+  df %>%
+    mutate(id_identificacion = as.character(id_identificacion))
+})
 datos_stack_df <- bind_rows(lista_esi, .id = "archivo")
 
 lista_esi_dt <- map(lista_esi, as.data.table)
@@ -87,7 +91,6 @@ if(require("ggplot2")) {
   gg <- autoplot(res_bench) + labs(title = "Comparación de Eficiencia: dplyr vs data.table")
   ggsave("outputs/benchmark_plot.png", gg)
 }
-
 
 # Respuestas --------------------------------------------------------------
 
