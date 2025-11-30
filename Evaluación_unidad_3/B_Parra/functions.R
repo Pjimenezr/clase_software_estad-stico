@@ -137,3 +137,42 @@ calcular_stats_dplyr <- function(datos_apilados) {
 
 ### Función 3 lista y data.table
 
+calcular_stats_datatable_lista <- function(lista_datos) {
+  lapply(lista_datos, function(datos) {
+    dt <- as.data.table(datos)
+    dt_ocupados <- dt[ocup_ref == 1]
+    
+    data.table(
+      media = mean(dt_ocupados$ing_t_p, na.rm = TRUE),
+      desviacion = sd(dt_ocupados$ing_t_p, na.rm = TRUE),
+      cv = sd(dt_ocupados$ing_t_p, na.rm = TRUE) / 
+        mean(dt_ocupados$ing_t_p, na.rm = TRUE)
+    )
+  }) %>% rbindlist()
+}
+
+#### Función 4, tablas apiladas y data.table
+calcular_stats_datatable_apilado <- function(datos_apilados_dt) {
+  datos_apilados_dt[ocup_ref == 1, 
+                    .(media = mean(ing_t_p, na.rm = TRUE),
+                      desviacion = sd(ing_t_p, na.rm = TRUE)),
+                    by = version][
+                      , cv := desviacion / media][]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
