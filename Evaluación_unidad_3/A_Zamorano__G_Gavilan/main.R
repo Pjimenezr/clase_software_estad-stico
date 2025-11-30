@@ -1,11 +1,3 @@
-library(dplyr)
-library(purrr)
-library(readr)
-library(data.table)
-library(microbenchmark)
-library(stringr)
-library(ggplot2)
-
 source("functions.R")
 
 urls <- c(
@@ -16,7 +8,7 @@ urls <- c(
   "https://www.ine.gob.cl/docs/default-source/encuesta-suplementaria-de-ingresos/bbdd/csv_esi/2018/esi-2018-personas.csv?sfvrsn=8a269cc6_4&download=true"
 )
 ###cabe aclarar que la "version" que aparecen en nuestras tablas resumen corresponden a la posición del los urls que pertenecen al vector url
-### por ejemplo, version 1 es la ESI del año 2018, version 2 es la ESI del 2019 y así sucesivamente.
+###por ejemplo, version 1 es la ESI del año 2018, version 2 es la ESI del 2019 y así sucesivamente.
 
 # 3.1 ---------------------------------------------------------------------
 
