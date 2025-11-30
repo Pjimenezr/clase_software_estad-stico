@@ -119,7 +119,35 @@ cat("  - Lista con", length(lista_datos), "datasets\n")
 cat("  - Dataset apilado con", nrow(datos_apilados), "filas\n\n")
 
 
+## se ejecuta el benchmark en cada caso
 
+cat("Ejecutando benchmark (5 iteraciones)...\n")
+cat("Esto puede tardar un momento...\n\n")
+
+resultados_benchmark <- microbenchmark(
+  
+  ########### lista + purrr #####
+  lista_purrr = {
+    calcular_stats_purrr(lista_datos)
+  },
+  
+  ####### apiladas y dplyr #######
+  apilado_dplyr = {
+    calcular_stats_dplyr(datos_apilados)
+  },
+  
+  ###### lista y data.table #######
+  lista_datatable = {
+    calcular_stats_datatable_lista(lista_datos)
+  },
+  
+  #### apiladas y data.table ######
+  apilado_datatable = {
+    calcular_stats_datatable_apilado(datos_apilados_dt)
+  },
+  
+  times = 5  # 5 iteraciones
+)
 
 
 
