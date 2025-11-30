@@ -182,8 +182,13 @@ print(tiempos_medios[, c("expr", "time_ms")])
 estrategia_mas_rapida <- tiempos_medios$expr[which.min(tiempos_medios$time_ms)]
 
 
+### pregunta 1
 
-
-
+cat("1. ¿Cuál estrategia es más eficiente y por qué?\n")
+cat("   La estrategia más eficiente es:", as.character(estrategia_mas_rapida), "\n\n")
+cat("   Esto se debe principalmente a que data.table fue diseñado pensando en el rendimiento con grandes volumenes de dtos\n")
+cat("   A diferencia de dplyr, que prioriza la sintaxis legible, data.table sacrifica algo de legibilidad a cambio de velocidad.\n")
+cat("   Por último, lo que ocurre al trabajar con tablas apiladas es que permite que todas las operaciones se ejecuten en un solo recorrido \n")
+cat("   de los datos, mientras que usar listas con map requiere iterar múltiples veces.\n\n")
 
 
