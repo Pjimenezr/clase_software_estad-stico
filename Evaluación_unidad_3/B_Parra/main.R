@@ -185,7 +185,7 @@ estrategia_mas_rapida <- tiempos_medios$expr[which.min(tiempos_medios$time_ms)]
 ### pregunta 1
 
 cat("1. ¿Cuál estrategia es más eficiente y por qué?\n")
-cat("   La estrategia más eficiente es:", as.character(estrategia_mas_rapida), "\n\n")
+cat("   La estrategia más eficiente son las tablas apiladas, o su nombre en el código:", as.character(estrategia_mas_rapida), "\n\n")
 cat("   Esto se debe principalmente a que data.table fue diseñado pensando en el rendimiento con grandes volumenes de dtos\n")
 cat("   A diferencia de dplyr, que prioriza la sintaxis legible, data.table sacrifica algo de legibilidad a cambio de velocidad.\n")
 cat("   Por último, lo que ocurre al trabajar con tablas apiladas es que permite que todas las operaciones se ejecuten en un solo recorrido \n")
@@ -205,5 +205,39 @@ cat("   ser aproximadamente", round(diferencia_pct, 1), "% más rápido que dply
 cat("   se vuelve aún más pronunciada cuando se trabaja con bases de datos más grandes\n")
 cat("   La desición de escoger uno u otro debería considerar si se quiere mayor velocidad de procesamiento, se escogería data.table\n")
 cat("   pero si lo que se desea es un código más intuitivo por ejemplo cuando se está comenzando a programar, se usaría dplyr. \n\n")
+
+
+#### Pregunta 3
+
+cat("3. ¿Usar map o apilar tablas genera diferencias notorias?\n")
+tiempo_lista <- mean(tiempos_medios$time_ms[grepl("lista", tiempos_medios$expr)])
+tiempo_apilado <- mean(tiempos_medios$time_ms[grepl("apilado", tiempos_medios$expr)])
+
+cat("   Tiempo promedio con listas + map:", round(tiempo_lista, 2), "ms\n")
+cat("   Tiempo promedio con tablas apiladas:", round(tiempo_apilado, 2), "ms\n\n")
+
+
+#diferencia en porcentaje
+diferencia_pct <- ((tiempo_lista - tiempo_apilado) / tiempo_lista) * 100
+
+cat("   Sí, las diferencias son muy notorias. Las tablas apiladas resultaron\n")
+cat("   aproximadamente", round(diferencia_pct, 1), "% más rápidas que usar listas con map.\n")
+cat("   Esto representa que las tablas apiladas tardaron menos de la mitad del tiempo.\n\n")
+cat("   Esto se podría deber a que cuando usamos listas con map, R debe\n")
+cat("   iterar sobre cada elemento de la lista (uno por cada año), aplicar la función\n")
+cat("   de cálculo a cada dataset por separado, y finalmente combinar todos los\n")
+cat("   resultados en una sola tabla. Cada una de estas etapas consume tiempo\n\n")
+cat("   En cambio, con las tablas apiladas, consolidamos todos los datos de los\n")
+cat("   cinco años en una única estructura al inicio. Esto permite que las\n")
+cat("   operaciones de filtrado (ocup_ref == 1), agrupación (por versión/año) y\n")
+cat("   cálculo de estadísticos se ejecuten en un solo recorrido optimizado de los\n")
+cat("   datos. \n\n")
+
+
+
+
+
+
+
 
 
