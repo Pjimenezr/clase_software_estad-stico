@@ -100,5 +100,40 @@ crear_tabla_ingresos <- function(lista_datos, nombres_archivos) {
   return(resultados)
 }
 
+##### espero no haya un error profe al subir esta cosa
+#### se me había bugueado y no me dejaba hacer push y tuve que mirar cómo arreglarlo
 
+
+#### Ejercio 4 (punto 5 de las instrucciones) Lo de la eficiencia
+# función 1 (lista y purr)
+
+calcular_stats_purrr <- function(lista_datos) {
+  map_df(lista_datos, function(datos) {
+    datos_ocupados <- datos %>% filter(ocup_ref == 1)
+    tibble(
+      media = mean(datos_ocupados$ing_t_p, na.rm = TRUE),
+      desviacion = sd(datos_ocupados$ing_t_p, na.rm = TRUE),
+      cv = sd(datos_ocupados$ing_t_p, na.rm = TRUE) / 
+        mean(datos_ocupados$ing_t_p, na.rm = TRUE)
+    )
+  })
+}
+
+## Función 2 (tablas apiladas y dplyr)
+
+calcular_stats_dplyr <- function(datos_apilados) {
+  datos_apilados %>%
+    filter(ocup_ref == 1) %>%
+    group_by(version) %>%
+    summarise(
+      media = mean(ing_t_p, na.rm = TRUE),
+      desviacion = sd(ing_t_p, na.rm = TRUE),
+      cv = desviacion / media,
+      .groups = "drop"
+    )
+}
+
+
+
+### Función 3 lista y data.table
 
