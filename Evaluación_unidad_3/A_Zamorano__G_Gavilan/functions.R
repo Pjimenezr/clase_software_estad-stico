@@ -1,8 +1,17 @@
-library(stringr)
+if (!require("dplyr")) install.packages("dplyr")
+if (!require("purrr")) install.packages("purrr")
+if (!require("readr")) install.packages("readr")
+if (!require("data.table")) install.packages("data.table")
+if (!require("microbenchmark")) install.packages("microbenchmark")
+if (!require("stringr")) install.packages("stringr")
+if (!require("ggplot2")) install.packages("ggplot2")
+library(dplyr)
+library(purrr)
 library(readr)
 library(data.table)
-library(purrr)
-library(tidyverse)
+library(microbenchmark)
+library(stringr)
+library(ggplot2)
 
 # urls --------------------------------------------------------------------
 
