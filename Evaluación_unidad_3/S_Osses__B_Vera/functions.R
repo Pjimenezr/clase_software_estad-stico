@@ -13,9 +13,8 @@ extract_name <- function(url) {
   return(file_name)
 }
 
-file_names <- purrr::map_chr(urls, extract_name)
-
-file_names
+#file_names <- purrr::map_chr(urls, extract_name)
+#file_names
 
 
 # 3.2 ----------------------------------------------
@@ -41,14 +40,14 @@ download_esi_data <- function(url, file_name, directory = "data") {
 
 # 3.3 ----------------------------------------------
 
-options(timeout = 300)
+#options(timeout = 300)
 
-purrr::walk2(
-  .x = urls, 
-  .y = file_names, 
-  .f = download_esi_data,
-  directory = "data" 
-)
+#purrr::walk2(
+#  .x = urls, 
+#  .y = file_names, 
+#  .f = download_esi_data,
+#  directory = "data" 
+#)
 
 
 # 4 -----------------------------------------------------------------------
@@ -56,15 +55,19 @@ purrr::walk2(
 # 4.1 ---------------------------------------------------------------------
 
 read_esi_data <- function(path) {
+# Usamos fread de data.table porque detecta separadores de forma automática
+data <- data.table::fread(path, showProgress = FALSE)
   
-  data <- readr::read_delim(
-    file = path, 
-    delim = NULL, 
-    col_names = TRUE,
-    show_col_types = FALSE
-  )
+# Convertir a tibble para que nos funcione con dplyr %>% 
+data <- as_tibble(data)
   
-  return(data)
+# Estandarizar nombres como buena práctica
+names(data) <- tolower(names(data))
+
+if("id_identificacion" %in% names(data)){
+  data$id_identificacion <- as.numeric(data$id_identificacion)
+}
+return(data)
 }
 
 
@@ -79,4 +82,31 @@ esi_data_list <- purrr::map(file_paths, read_esi_data)
 file_names_clean <- basename(file_paths)
 names(esi_data_list) <- file_names_clean
 
+
+
+# 5.1 Función para Tabla 1 (Personas y Hogares) -------------------------
+calc_counts <- function(data, version) {
+  data %>%
+    summarise(
+      version = version,
+      n_personas = n_distinct(idrph),
+      n_hogares = n_distinct(id_identificacion)
+    )
+}
+
+
+
+# 5.2 Función para Tabla 2 (Estadísticos Ingresos) ----------------------
+calc_income_stats <- function(data, version) {
+  data %>%
+    filter(ocup_ref == 1) %>%
+    summarise(
+      version = version,
+      min_ing = min(ing_t_p, na.rm = TRUE),
+      max_ing = max(ing_t_p, na.rm = TRUE),
+      media_ing = mean(ing_t_p, na.rm = TRUE),
+      p10 = quantile(ing_t_p, 0.10, na.rm = TRUE),
+      p90 = quantile(ing_t_p, 0.90, na.rm = TRUE)
+    )
+}
 
