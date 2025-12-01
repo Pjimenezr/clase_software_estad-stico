@@ -117,8 +117,18 @@ tabla_estadisticos_ingresos <- purrr::map_df(
  print(benchmark_results)
 
 
-##Cuál estrategia es más eficiente y por qué?  Según los resultados obtenidos en el microbenchmark, la estrategia más eficiente en promedio fue "Lista + purrr" (Media: 6.85 ms), seguida muy de cerca por "Apilado + data.table" si observamos la mediana (7.32 ms).
-##
+#1. Cuál estrategia es más eficiente y por qué?  Según los resultados obtenidos en el microbenchmark, la estrategia más eficiente en promedio fue "Lista + purrr" (Media: 6.85 ms), seguida muy de cerca por "Apilado + data.table" si observamos la mediana (7.32 ms).
+#La estrategia más eficiente es Tablas Apiladas + data.table (7.3280 ms). 
+#Es la más rápida porque utiliza la librería data.table, que es altamente optimizada y programada en C, 
+#lo que le permite procesar el conjunto de datos unificado (apilado) en una sola operación muy veloz, minimizando la sobrecarga.
+ 
+##2. ¿Existen diferencias relevantes entre dplyr y data.table?
+##Sí, existen diferencias muy relevantes. La versión apilada de data.table (7.3280 ms) es aproximadamente 23 veces más rápida que la versión apilada de dplyr (173.1330 ms).
+##sta gran diferencia demuestra que data.table es una herramienta superior para tareas intensivas de manipulación y resumen sobre grandes volúmenes de datos.
+ 
+###3. ¿Usar map o apilar tablas genera diferencias notorias?
+###Sí, genera diferencias notorias. El impacto depende de la librería: con librerías eficientes como data.table, la estrategia de apilar las tablas (7.3280 ms) es el doble de rápida que usar map sobre la lista (17.0538 ms).
+###Sin embargo, si se utiliza una librería más lenta como dplyr, usar map sobre la lista de tablas pequeñas es en realidad la opción más rápida, ya que evita la sobrecarga de procesar un único data frame gigante.
 
 
 # 7. Generación de Archivos en carpeta outputs ----------------------------
