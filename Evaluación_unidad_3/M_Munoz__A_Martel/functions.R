@@ -11,7 +11,7 @@ library(purrr)
 library(data.table)
 
 extract_name <- function(url) {
-  nombre_archivo <- stringr::str_extract(url, "esi[-_]\\d{4}[-_a-z]*\\.cav")
+  nombre_archivo <- stringr::str_extract(url, "esi[-_]\\d{4}[-_a-z]*\\.csv")
   nombre_archivo <- stringr::str_remove(nombre_archivo, "\\?.*")
   nombre_archivo <- stringr::str_replace_all(nombre_archivo, "-", "_")
   return(nombre_archivo)
@@ -30,12 +30,14 @@ download_esi_data <- function(url, file_name, directory) {
 }
 
 read_esi_data <- function(path) {
-  df_leido <- data.table::fread(path, data.table = FALSE) 
+  df_leido <- data.table::fread(path, data.table = FALSE)
+  names(df_leido) <- tolower(names(df_leido))
   version_name <- basename(path) %>%
-    stringr::str_extract("esi[_]\\d{4}")
+    stringr::str_extract("esi[-_]\\d{4}")
   df_leido$version <- version_name
   return(df_leido)
 }
+
 
 calculate_income_stats <- function(df, version_name) {
   df_filtrado <- df %>%
@@ -73,3 +75,4 @@ calc_stats_datatable <- function(df) {
   stats[, cv := desv_estandar / media]
   return(stats)
 }
+
